@@ -59,9 +59,21 @@ class CountryController{
 
   /*  /population/min
     return the country with the smallest population*/
+  @RequestMapping(value = "/population/min")
+  fun getBySmallestPopulation(): ResponseEntity<Country> {
+      val minPopulation = countryList.minBy { it.population }
+      return ResponseEntity(minPopulation, HttpStatus.OK)
+  }
+
 
     /*/population/max
     return the country with the largest population*/
+    @RequestMapping(value = "/population/max")
+    fun getByLargestPopulation(): ResponseEntity<Country> {
+        val maxPopulation = countryList.maxBy { it.population }
+        return ResponseEntity(maxPopulation, HttpStatus.OK)
+    }
+
     /*/population/median
     return the country with the median population*/
 
