@@ -86,13 +86,36 @@ class CountryController{
    /* /age/age/{age}
     return the countries that have a median age equal to or greater than the given age*/
 
+    @RequestMapping(value = "/age/age/{age}")
+    fun getByAge(@PathVariable age:Int): ResponseEntity<List<Country>> {
+        var sortedList = countryList.sortedWith(compareBy { it.name })
+        var filterSortedList = sortedList.filter { it.medianAge >= age }
+        return ResponseEntity(filterSortedList, HttpStatus.OK)
+    }
     /*/age/min
     return the country with the smallest median age*/
 
+    @RequestMapping(value = "/age/min")
+    fun getBySmallestAge(): ResponseEntity<Country> {
+        val minAge = countryList.minBy { it.medianAge }
+        return ResponseEntity(minAge, HttpStatus.OK)
+    }
+
     /*/age/max
     return the country the the greatest median age*/
+    @RequestMapping(value = "/age/max")
+    fun getByLargestAge(): ResponseEntity<Country> {
+        val maxAge = countryList.maxBy { it.medianAge }
+        return ResponseEntity(maxAge, HttpStatus.OK)
+    }
 
     /*/age/median
     return the country with the median median age*/
+
+    @RequestMapping(value = "/age/median")
+    fun getMedianAge(): ResponseEntity<Country> {
+        var sortedList = countryList.sortedWith(compareBy { it.medianAge })
+        return ResponseEntity(sortedList[sortedList.size/2], HttpStatus.OK)
+    }
 
 }
