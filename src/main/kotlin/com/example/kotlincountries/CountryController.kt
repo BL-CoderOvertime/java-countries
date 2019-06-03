@@ -77,6 +77,12 @@ class CountryController{
     /*/population/median
     return the country with the median population*/
 
+    @RequestMapping(value = "/population/median")
+    fun getMedianPopulation(): ResponseEntity<Country> {
+        var sortedList = countryList.sortedWith(compareBy { it.population })
+        return ResponseEntity(sortedList[sortedList.size/2], HttpStatus.OK)
+    }
+
    /* /age/age/{age}
     return the countries that have a median age equal to or greater than the given age*/
 
