@@ -42,12 +42,20 @@ class CountryController{
     @RequestMapping(value = "/names/size/{number}")
     fun getByNameLength(@PathVariable number:Int): ResponseEntity<List<Country>> {
         var sortedList = countryList.sortedWith(compareBy { it.name })
-        var filterSortedList = sortedList.filter { it.name.length < number }
+        var filterSortedList = sortedList.filter { it.name.length <= number }
         return ResponseEntity(filterSortedList, HttpStatus.OK)
     }
 
    /* /population/size/{people}
     return the countries that have a population equal to or greater than the given population*/
+
+    @RequestMapping(value = "/population/size/{people}")
+    fun getByPopulationSize(@PathVariable people:Int): ResponseEntity<List<Country>> {
+        var sortedList = countryList.sortedWith(compareBy { it.name })
+        var filterSortedList = sortedList.filter { it.population >= people }
+        return ResponseEntity(filterSortedList, HttpStatus.OK)
+    }
+
 
   /*  /population/min
     return the country with the smallest population*/
