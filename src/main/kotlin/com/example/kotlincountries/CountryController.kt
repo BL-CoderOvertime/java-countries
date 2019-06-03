@@ -2,12 +2,13 @@ package com.example.kotlincountries
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-class EmployeeController{
+class CountryController{
 
    /* /names/all
     return the names of all the countries alphabetically*/
@@ -26,6 +27,14 @@ class EmployeeController{
 
     /* /names/start/{letter}
     return the countries alphabetically that begin with the given letter*/
+
+    @RequestMapping(value = "/names/start/{letter}")
+    fun getByLetter(@PathVariable letter:String): ResponseEntity<List<Country>> {
+        var sortedList = countryList.sortedWith(compareBy {it.name})
+        var filterSortedList = sortedList.filter{it.name.substring(0,1).toLowerCase() == letter}
+        return ResponseEntity(filterSortedList,HttpStatus.OK)
+
+    }
 
     /*/names/size/{number}
     return the countries alphabetically that have a name equal to or longer than the given length*/
